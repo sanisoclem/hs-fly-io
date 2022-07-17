@@ -68,7 +68,7 @@ jobs:
       - name: 🌏 Get env url
         id: env-url
         run: |
-          echo "::set-output name=hostname::$(flyctl info ${{ steps.app_name.outputs.value }} --host)\n"
+          echo "::set-output name=hostname::$(flyctl info ${{ steps.app_name.outputs.value }} --host)"
       - name: 🚀 Deploy to fly.io
         run: |
           flyctl deploy --now -i registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
