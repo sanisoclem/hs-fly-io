@@ -71,5 +71,5 @@ jobs:
           echo "::set-output name=hostname::$(flyctl info ${{ steps.app_name.outputs.value }} --host)\n"
       - name: 🚀 Deploy to fly.io
         run: |
-          flyctl deploy --now -i registry.fly.io/${{ steps.app_name.outputs.value }}:${{ env.BRANCH }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+          flyctl deploy --now -i registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
 
