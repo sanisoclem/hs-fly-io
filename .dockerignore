@@ -1,0 +1,11 @@
+*
+!package.yaml
+!stack.yaml
+!stack.yaml.lock
+!.dir-locals.el
+!app
+!config
+!src
+!static
+!templates
+!test
