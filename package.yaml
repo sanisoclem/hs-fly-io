@@ -24,6 +24,7 @@ dependencies:
 - servant-server
 - wai
 - warp
+- mtl
 
 library:
   source-dirs: src
