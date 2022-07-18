@@ -1,14 +1,14 @@
 from haskell:latest as build
 
 WORKDIR /src
-COPY ./package.yaml /src
-COPY ./stack.yaml /src
-COPY ./stack.yaml.lock /src
+COPY ./package.yaml /src/
+COPY ./stack.yaml /src/
+COPY ./stack.yaml.lock /src/
 
 RUN stack setup
 RUN stack build --only-dependencies
 
-COPY . /src
+COPY ./* /src/
 
 RUN stack build
 RUN mkdir dist && cp "$(stack path --local-install-root)/bin/hs-fly-io" ./dist/hs-fly-io
@@ -16,7 +16,7 @@ RUN mkdir dist && cp "$(stack path --local-install-root)/bin/hs-fly-io" ./dist/h
 FROM haskell:latest
 
 WORKDIR /app
-COPY --from=0 /src/dist /app
+COPY --from=build /src/dist /app
 
 EXPOSE 3000
 
