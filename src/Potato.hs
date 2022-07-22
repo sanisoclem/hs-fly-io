@@ -1,10 +1,10 @@
 {-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TypeOperators   #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Potato
-    ( HandlerEnvironment
-    , PotatoHandler
+    ( PotatoHandler
     , potatoToHandler
     ) where
 
@@ -18,19 +18,35 @@ import Control.Monad.Reader
 import Control.Monad.Except
 import System.Environment
 import Data.Maybe
+import Data.Text (pack)
+import Fauna
+import Network.HTTP.Req
+  ( POST (..),
+    ReqBodyLbs (..),
+    defaultHttpConfig,
+    header,
+    https,
+    lbsResponse,
+    req,
+    responseBody,
+    runReq,
+    Url,
+    Scheme (Https),
+    (/:)
+  )
 
-data HandlerEnvironment = HandlerEnvironment
-    { potato :: String
-    , potatoo :: String }
-
-newtype PotatoHandler a = PotatoHandler {
-    unPotato :: ReaderT HandlerEnvironment (ExceptT ServerError IO) a
-} deriving (Monad, Functor, Applicative, MonadReader HandlerEnvironment, MonadIO, MonadError ServerError)
+newtype PotatoHandler e a = PotatoHandler {
+    unPotato :: ReaderT e (ExceptT ServerError IO) a
+} deriving (Monad, Functor, Applicative, MonadReader e, MonadIO, MonadError ServerError)
 
 -- TODO: use envy
-potatoToHandler :: PotatoHandler a -> Handler a
+potatoToHandler :: PotatoHandler FaunaClient a -> Handler a
 potatoToHandler ph = do
-  potato <- liftIO $ lookupEnv "POTATO"
-  potatoo <- liftIO $ lookupEnv "POTATOO"
-  r <- liftIO $ runExceptT (runReaderT (unPotato ph) (HandlerEnvironment (fromMaybe "unknown" potato) (fromMaybe "unknown" potatoo)))
+  let endpoint = https "graphql.fauna.com" /: "graphql"
+  secret <- liftIO $ lookupEnv "FAUNA_SECRET"
+  secret <- pack <$> maybe (throwError err500) return secret
+  let config = FaunaConfig secret endpoint
+  let client = createClient config
+
+  r <- liftIO $ runExceptT (runReaderT (unPotato ph) client)
   liftEither r

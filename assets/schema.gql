@@ -1,0 +1,19 @@
+type Ledger {
+	id: String!
+	name: String!
+	createdBy: String!
+	createDate: String!
+}
+
+type Account {
+	id: String!
+	name: String!
+	createdBy: String!
+	createDate: String!
+	ledgerId: String!
+}
+
+type Query {
+  allLedgers: [Ledger!]!
+	allAccounts(ledgerId: String!): [Account!]!
+}

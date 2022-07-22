@@ -20,7 +20,7 @@ instance ToJSON Ledger
 
 type LedgerAPI = "ledger" :> Get '[JSON] [Ledger]
 
-ledgerServer :: ServerT LedgerAPI PotatoHandler
+ledgerServer :: ServerT LedgerAPI (PotatoHandler e)
 ledgerServer = return ledgers
 
 ledgers :: [Ledger]

@@ -3,11 +3,32 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: morpheus-graphql-client-0.20.0@sha256:6ac64bdf718fab00e81306eff4f71c3479a7c65e6f597e3f9c19fdba9ac3cdea,4376
+    pantry-tree:
+      size: 4413
+      sha256: 4ee14c8308a58e7ca692a8eb5df593b4b3a03530c6a07f482338c3b837d9afbf
+  original:
+    hackage: morpheus-graphql-client-0.20.0
+- completed:
+    hackage: morpheus-graphql-core-0.20.0@sha256:c638ba6c38bb3607b465f7d6db3f48a8e69c8139715364d72209a001c7fa19b1,13948
+    pantry-tree:
+      size: 19197
+      sha256: 2df8db6c9c686768949bf16f7e87d91401fdbb4bb34d64004d5acf73c4f88ce3
+  original:
+    hackage: morpheus-graphql-core-0.20.0
+- completed:
+    hackage: morpheus-graphql-code-gen-0.20.0@sha256:96508a104d3872e4e6f30ff3f47d1f08965fb966adc5f7f3c0d342eaffe475f8,2355
+    pantry-tree:
+      size: 1096
+      sha256: d6a9193ff963b15bffc7475a5a6ca94335fe82f289954c311202d97409fd4d77
+  original:
+    hackage: morpheus-graphql-code-gen-0.20.0
 snapshots:
 - completed:
-    size: 534126
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/31.yaml
-    sha256: 637fb77049b25560622a224845b7acfe81a09fdb6a96a3c75997a10b651667f6
+    size: 619163
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/16.yaml
+    sha256: a27a5761890ade44d7dd21a5f5f93c87e60b9c063655fff835d69dd1071474f0
   original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/16/31.yaml
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/16.yaml

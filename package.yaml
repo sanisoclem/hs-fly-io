@@ -1,6 +1,6 @@
 name:                hs-fly-io
 version:             0.1.0.0
-github:              "githubuser/hs-fly-io"
+github:              "sanisoclem/hs-fly-io"
 license:             MIT
 author:              "Jerahmeel Cosinas"
 maintainer:          "me@jerahmeelcosinas.net"
@@ -16,15 +16,20 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/hs-fly-io#readme>
+description:         Please see the README on GitHub at <https://github.com/sanisoclem/hs-fly-io#readme>
 
 dependencies:
 - base >= 4.7 && < 5
 - aeson
 - servant-server
+- bytestring
+- req
+- text
 - wai
 - warp
 - mtl
+- data-has
+- morpheus-graphql-client
 
 library:
   source-dirs: src

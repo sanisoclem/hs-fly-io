@@ -22,15 +22,15 @@ instance ToJSON Account
 
 type AccountAPI = "account" :>
   ( Get '[JSON] [Account]
-  :<|> DeleteNoContent '[JSON] NoContent
+  :<|> DeleteNoContent
   )
 
-accountServer :: ServerT AccountAPI PotatoHandler
+accountServer :: ServerT AccountAPI (PotatoHandler e)
 accountServer = get :<|> delete where
-  get :: PotatoHandler [Account]
+  get :: PotatoHandler e [Account]
   get = return accounts
 
-  delete :: PotatoHandler NoContent
+  delete :: PotatoHandler e NoContent
   delete = return NoContent
 
 accounts :: [Account]

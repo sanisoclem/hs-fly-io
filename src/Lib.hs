@@ -18,7 +18,7 @@ api = Proxy
 type API = LedgerAPI
   :<|> AccountAPI
 
-potatoServer :: ServerT API PotatoHandler
+potatoServer :: ServerT API (PotatoHandler e)
 potatoServer = ledgerServer :<|> accountServer
 
 server :: Server API
