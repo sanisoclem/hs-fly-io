@@ -30,6 +30,7 @@ dependencies:
 - mtl
 - data-has
 - morpheus-graphql-client
+- witch
 
 library:
   source-dirs: src

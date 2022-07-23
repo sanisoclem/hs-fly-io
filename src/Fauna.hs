@@ -6,14 +6,21 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module Fauna
   ( createClient
   , FaunaConfig (..)
   , FaunaClient (..)
+  , HasFaunaClient (..)
+  , Ledgers (..)
+  , Accounts
   )
 where
 
+import Data.Has
 import Data.ByteString.Lazy.Char8 (ByteString)
 import Data.Text.Encoding (encodeUtf8)
 import Data.Morpheus.Client
@@ -69,9 +76,15 @@ data FaunaConfig = FaunaConfig
   }
 
 data FaunaClient = FaunaClient
-  { getLedgers :: !(IO (Either (FetchError Ledgers) Ledgers))
+  { getLedgers :: !(IO (Either (FetchError Ledgers) Ledgers)) -- use MonadUnliftIO ?
   , getAccounts :: !(Text -> IO (Either (FetchError Accounts) Accounts))
   }
+
+class HasFaunaClient env where
+  getFaunaClient :: env -> FaunaClient
+
+instance Has FaunaClient m => HasFaunaClient m where
+  getFaunaClient = getter
 
 getResolver :: Url 'Https -> Text -> ByteString -> IO ByteString
 getResolver url secret b = runReq defaultHttpConfig $ do

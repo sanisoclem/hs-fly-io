@@ -18,11 +18,10 @@ api = Proxy
 type API = LedgerAPI
   :<|> AccountAPI
 
-potatoServer :: ServerT API (PotatoHandler e)
-potatoServer = ledgerServer :<|> accountServer
-
 server :: Server API
-server = hoistServer api potatoToHandler potatoServer
+server = hoistServer api potatoToHandler endpoints
+  where
+    endpoints = ledgerServer :<|> accountServer
 
 app :: Application
 app = serve api server
