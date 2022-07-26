@@ -18,7 +18,6 @@ jobs:
 
       - name: Deploy Staging
         id: deploy
-        if: ${{ github.event.action != 'closed' }}
         uses: brentd/fly-staging-app@v1
         with:
           name: hs-fly-io-staging-pr-${{ github.event.number }}
