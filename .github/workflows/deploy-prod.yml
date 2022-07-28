@@ -1,6 +1,4 @@
-name: Fly Deploy
-
-
+name: Fly Deploy Production
 on:
   push:
     branches: ['master']

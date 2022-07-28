@@ -1,0 +1,31 @@
+name: Fly Deploy Staging
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  staging_app:
+    # Create a GitHub deployment environment per review app.
+    concurrency: staging-pr-${{ github.event.number }}
+    runs-on: ubuntu-latest
+    environment:
+      name: Staging-PR-${{ github.event.number }}
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy Staging
+        id: deploy
+        uses: brentd/fly-staging-app@v1
+        with:
+          name: hs-fly-io-staging-pr-${{ github.event.number }}
+
+      - name: Clean up GitHub environment
+        uses: strumwolf/delete-deployment-environment@v2
+        if: ${{ github.event.action == 'closed' }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: Staging-PR-${{ github.event.number }}
+          onlyRemoveDeployments: true
